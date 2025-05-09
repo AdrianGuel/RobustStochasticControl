@@ -88,13 +88,11 @@ poetry run streamlit run main.py
 
 | 📈 State & Control Plots | 🎥 Cart Animation |
 |--------------------------|------------------|
-| ![Plot Preview](docs/preview_plot.png) | ![Animation Preview](docs/preview_anim.gif) |
-
-*Note: Add your own previews to `/docs` for full display.*
+| ![Plot Preview](images/states.png) | ![Animation Preview](images/animation.png) |
 
 ---
 
-## 🧭 Customization Ideas
+## 🧭 Future work
 
 - Add support for **external reference signals**
 - Export simulation data as **CSV**
@@ -109,7 +107,3 @@ MIT License.
 © 2025 El inge de Control
 
 ---
-
-## 🙌 Acknowledgments
-
-Developed as part of a teaching module for **Estimation and Control Systems** using open-source tools.
