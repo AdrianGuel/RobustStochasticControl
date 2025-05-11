@@ -42,6 +42,25 @@ t_disc = np.arange(len(y_disc)) * ts
 fig = go.Figure()
 
 fig.add_trace(go.Scatter(
+    x=t, y=y,
+    mode='lines',
+    name='Output',
+    line=dict(dash='solid')
+))
+
+fig.add_trace(go.Scatter(
+    x=t, y=u,
+    mode='lines',
+    name='Input',
+    line=dict(dash='solid')
+))
+
+fig.show()
+
+# Create the Plotly figure
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
     x=t_cont, y=y_cont,
     mode='lines',
     name='True system (continuous)',
