@@ -5,7 +5,6 @@ A real-time simulation and visualization tool for a 1D cart system with state es
 ---
 
 ## 🎯 Overview
-
 This interactive app simulates a mass-on-a-track system (cart) subject to a control force. The cart's position is estimated using a Kalman filter, and controlled via either LQR or PID. The app includes live plotting and animation of the cart behavior in response to a dynamic reference trajectory.
 
 ---
