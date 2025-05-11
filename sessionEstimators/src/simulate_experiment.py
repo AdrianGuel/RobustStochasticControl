@@ -1,17 +1,17 @@
 # simulate_experiment.py
 
 import numpy as np
-from scipy.signal import TransferFunction, lsim
+from scipy.signal import lsim, TransferFunction
 
-def simulate_experiment(duration=30, dt=0.01, zeta=0.7, omega_n=1.0, seed=42):
+def simulate_experiment(G, duration=30, dt=0.01, seed=42):
     """
-    Simulate the response of a second-order system to random step-like inputs.
+    Simulate the response of a system G(s) to random step-like inputs.
 
     Args:
+        G: scipy.signal.TransferFunction
+            Continuous-time system to simulate.
         duration: total time in seconds
         dt: time step
-        zeta: damping ratio
-        omega_n: natural frequency
         seed: random seed for reproducibility
 
     Returns:
@@ -22,15 +22,11 @@ def simulate_experiment(duration=30, dt=0.01, zeta=0.7, omega_n=1.0, seed=42):
     np.random.seed(seed)
     t = np.arange(0, duration, dt)
 
-    # Define second-order system: G(s) = omega_n^2 / (s^2 + 2*zeta*omega_n*s + omega_n^2)
-    num = [omega_n**2]
-    den = [1, 2*zeta*omega_n, omega_n**2]
-    system = TransferFunction(num, den)
-
     # Create random step-wise input: change value every 1 second
     steps = int(1 / dt)
     u = np.repeat(np.random.uniform(-1, 1, len(t) // steps + 1), steps)[:len(t)]
 
-    # Simulate response
-    tout, y, _ = lsim(system, U=u, T=t)
+    # Simulate system response to input
+    tout, y, _ = lsim(G, U=u, T=t)
+
     return t, u, y
