@@ -19,14 +19,14 @@ Bw = np.array([[0], [0.001]])
 
 # ----------------------------------------
 # Noise covariances (continuous-time)
-Sw = 5e5#5000
-Sv = 1
+Sw = 5e3#5000
+Sv = 100
 Qw = Bw @ Bw.T * Sw  # Process noise covariance
 Rv = np.array([[Sv]])  # Measurement noise covariance
 
 # ----------------------------------------
 # Cost function for LQR
-q = 180
+q = 18e1
 r = 1
 Q = np.array([[q, 0], [0, 0]])
 R = np.array([[r]])
