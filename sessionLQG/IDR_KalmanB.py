@@ -10,6 +10,7 @@ r = 1.0  # reference
 
 # Noise parameters
 sigma_w = 0.01  # process noise std
+sigma_T = 0.1  # std dev of omega_T
 sigma_v = 0.01  # measurement noise std
 np.random.seed(0)
 
@@ -63,6 +64,11 @@ for k in range(steps):
     L_k = P_pred @ C.T / S
     y_pred = C @ x_pred
     x_hat = x_pred + L_k.flatten() * (y - y_pred)
+
+        # Disturbance: torque perturbation (white noise)
+    omega_T = np.random.normal(0, sigma_T)
+    x_hat[2] += omega_T  # only tau_L is driven by omega_T
+
     P_k = (np.eye(3) - L_k @ C) @ P_pred
 
     # ----------- Integrator --------------------------

@@ -3,24 +3,26 @@ import plotly.graph_objects as go
 from scipy.linalg import solve_continuous_are
 # Time parameters
 dt = 0.01
-T = 20
+T = 100
 steps = int(T / dt)
 t = np.linspace(0, T, steps)
-r = 1.0  # reference
+r = np.sin(0.1*t)  # reference
 
 # Noise parameters
 sigma_T = 0.1  # std dev of omega_T
+sigma_v = 0.01  # measurement noise std
+
 np.random.seed(0)
 
-# LQR controller design (Page 23)
+# LQR controller design considering integral control
 A_lqr = np.array([
     [-1.0, 1.0, 0.0],
     [0.0, -0.1, 0.0],
     [-1.0, 0.0, 0.0]
 ])
 B_lqr = np.array([[0.0], [0.1], [0.0]])
-Q = np.diag([0.0, 0.0, 1.0])
-R = np.array([[0.0001]])
+Q = np.diag([0.0, 0.0, 10.0])
+R = np.array([[0.00001]])
 
 # Solve CARE
 P = solve_continuous_are(A_lqr, B_lqr, Q, R)
@@ -52,7 +54,7 @@ omega_hist, u_hist, tauL_hist = [], [], []
 # Simulate dynamics using Euler method
 for k in range(steps):
     # Measurement
-    y = C @ x_hat
+    y = C @ x_hat + np.random.normal(0, sigma_v)
 
     # Control law
     u = -K[0, 0] * x_hat[0] - K[0, 1] * x_hat[1] - K[0, 2] * xI
@@ -65,7 +67,7 @@ for k in range(steps):
     dx_hat[2] += omega_T  # only tau_L is driven by omega_T
 
     # Integrator update
-    dxI = r - y
+    dxI = r[k] - y
 
     # Euler update
     x_hat += dx_hat * dt
@@ -80,7 +82,7 @@ print(u_hist)
 # Plot omega
 fig1 = go.Figure()
 fig1.add_trace(go.Scatter(x=t, y=omega_hist, name="Estimated ω(t)", line=dict(color="blue")))
-fig1.add_trace(go.Scatter(x=t, y=[r]*len(t), name="Reference", line=dict(dash="dash")))
+fig1.add_trace(go.Scatter(x=t, y=r, name="Reference", line=dict(dash="dash")))
 fig1.update_layout(title="Angular Velocity Tracking with Disturbance",
                    xaxis_title="Time (s)", yaxis_title="ω(t) [rad/s]")
 fig1.show()
