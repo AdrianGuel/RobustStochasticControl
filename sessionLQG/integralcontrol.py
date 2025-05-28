@@ -16,7 +16,7 @@ A_aug = np.block([
     [-C, np.zeros((1, 1))]
 ])
 B_aug = np.vstack([B, np.zeros((1, 1))])
-E_aug = np.vstack([np.zeros((2, 1)), [[1]]])  # for reference input r(t)
+# E_aug = np.vstack([np.zeros((2, 1)), [[1]]])  # for reference input r(t)
 
 # LQR cost matrices
 Q = np.diag([0, 0, 1])  # penalize only integral error
