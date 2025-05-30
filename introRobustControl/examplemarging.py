@@ -57,8 +57,8 @@ T2, y2 = ctrl.step_response(ctrl.feedback(G2), T)
 
 # Step response plot
 step_fig = go.Figure()
-step_fig.add_trace(go.Scatter(x=T1, y=y1, mode='lines', name='K=1.0 (Stable)'))
-step_fig.add_trace(go.Scatter(x=T2, y=y2, mode='lines', name='K=3.0 (Reduced Margin)'))
+step_fig.add_trace(go.Scatter(x=T1, y=y1, mode='lines', name='K=3'))
+step_fig.add_trace(go.Scatter(x=T2, y=y2, mode='lines', name='K=100.0'))
 step_fig.update_layout(title='Step Response Comparison',
                        xaxis_title='Time (s)',
                        yaxis_title='Output',
