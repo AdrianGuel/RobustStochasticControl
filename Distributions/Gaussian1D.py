@@ -2,12 +2,10 @@ import numpy as np
 import plotly.graph_objects as go
 from pathlib import Path
 
-
 def gaussian_pdf(x: np.ndarray, mean: float, variance: float) -> np.ndarray:
     return (1.0 / np.sqrt(2.0 * np.pi * variance)) * np.exp(
         -((x - mean) ** 2) / (2.0 * variance)
     )
-
 
 def main() -> None:
     mean = 0.0
